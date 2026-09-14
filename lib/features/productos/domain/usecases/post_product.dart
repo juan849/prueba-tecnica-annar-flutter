@@ -5,9 +5,11 @@ class PostProduct {
   final ProductoRepository repository;
 
   PostProduct(this.repository);
-  Future<void> call({required String nombre, 
+  Future<Producto> call({required String nombre, 
   required String codigo,required double precio, required int cantidad }) async{
-     await repository.createProducto(nombre: nombre, codigo: codigo, precio: precio, cantidad: cantidad);
+    return await repository.createProducto(nombre: nombre, codigo: codigo,
+     precio: precio, cantidad: cantidad);
+     
   }
 
 }

@@ -2,6 +2,7 @@
     import 'package:annar_products_app/features/productos/data/datasources/producto_remote_datasource.dart';
 import 'package:annar_products_app/features/productos/data/repositories/producto_repository.dart';
 import 'package:annar_products_app/features/productos/domain/usecases/get_product.dart';
+import 'package:annar_products_app/features/productos/domain/usecases/patch_stock.dart';
 import 'package:annar_products_app/features/productos/domain/usecases/post_product.dart';
 import 'package:annar_products_app/features/productos/presentation/pages/product_screen.dart';
 import 'package:annar_products_app/features/productos/presentation/provider/provider_product.dart';
@@ -23,14 +24,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     
-    final ProductoRemoteDataSource = ProductoRemoteDataSourceImpl(httpClient);
+    final productoRemoteDataSource = ProductoRemoteDataSourceImpl(httpClient);
 
     
-    final ProductoRepository = ProductoRepositoryImpl(ProductoRemoteDataSource);
+    final productoRepository = ProductoRepositoryImpl(productoRemoteDataSource);
 
     
-    final getProductosUseCase = GetProduct(ProductoRepository);
-    final createProductoUseCase = PostProduct(ProductoRepository);
+    final getProductosUseCase = GetProduct(productoRepository);
+    final createProductoUseCase = PostProduct(productoRepository);
+    final patchStockUseCase = PatchStock(productoRepository);
 
 
     return MultiProvider(
@@ -38,13 +40,12 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => ProductProvider(
             getProductsUseCase: getProductosUseCase,
-            postProductsUseCase: createProductoUseCase
-            
+            postProductsUseCase: createProductoUseCase, patchStockUseCase: patchStockUseCase
           ),
         ),
       ],
       child: MaterialApp(
-        title: 'Gestión de Usuarios',
+        title: 'Gestión de Productos',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.teal),

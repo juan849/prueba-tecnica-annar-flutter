@@ -12,8 +12,8 @@ class ProductoModel extends Producto {
         id: json["id"] ?? 0,
         nombre: json["nombre"] ?? '',
         codigo: json["codigo"] ?? '',
-        precio: json["precio"],
-        cantidad: json["cantidad"],
+        precio: (json['precio'] as num).toDouble(),
+        cantidad: (json['cantidad'] as num).toInt(),
     );
 
     Map<String, dynamic> toJson() => {

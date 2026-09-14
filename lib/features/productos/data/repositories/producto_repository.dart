@@ -11,7 +11,7 @@ class ProductoRepositoryImpl implements ProductoRepository {
   ProductoRepositoryImpl(this.remoteDatasource);
 
   @override
-  Future<void> createProducto({required String nombre, required String codigo, required double precio, required int cantidad}) async {
+  Future<Producto> createProducto({required String nombre, required String codigo, required double precio, required int cantidad}) async {
     return await remoteDatasource.createProducto(nombre: nombre, codigo: codigo, precio: precio, cantidad: cantidad);
   }
 
@@ -19,6 +19,11 @@ class ProductoRepositoryImpl implements ProductoRepository {
   Future<List<Producto>> getProductos() async {
     return await remoteDatasource.getProductos();
    
+  }
+
+  @override
+  Future<Producto> updateStock({required int id, required int cantidad}) async {
+    return await remoteDatasource.updateStock(id: id, cantidad: cantidad);
   }
 
   
